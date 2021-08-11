@@ -10,25 +10,23 @@
       />
     </div>
     <div class="showmap">
-      <button @click="showMap = !showMap">
-        Toggle map
+      <button class="showmapbtn" @click="CloseMap()">
+        <i class="bx bx-map"></i>
+        <i class="bx bx-x"></i>
       </button>
     </div>
-    <table class="table table_border" id="idData">
+    <table class="table table_border" id="idData" v-if="mergeDatas.length > 0">
       <thead>
         <tr>
           <td>map</td>
           <td>sno</td>
-          <td>sna</td>
+          <td colspan="3">sna</td>
           <td>tot</td>
           <td>sarea</td>
-          <td>mday</td>
-          <td>lat</td>
-          <td>lng</td>
-          <td>ar</td>
-          <td>sareaen</td>
-          <td>snaen</td>
-          <td>aren</td>
+          <td colspan="2">mday</td>
+          <td colspan="2">lat</td>
+          <td colspan="2">lng</td>
+          <td colspan="3">ar</td>
           <td>bemp</td>
           <td>srcUpdateTime</td>
           <td>updateTime</td>
@@ -38,21 +36,18 @@
       </thead>
       <tr v-for="data in mergeDatas" :key="data">
         <td>
-          <botton class="botton_icon" @click="ShowTheWay(data)"
+          <botton class="map_icon" @click="ShowTheWay(data)"
             ><i class="bx bx-map"></i
           ></botton>
         </td>
         <td>{{ data.sno }}</td>
-        <td>{{ data.sna }}</td>
+        <td colspan="3">{{ data.sna }}</td>
         <td>{{ data.tot }}</td>
         <td>{{ data.sarea }}</td>
-        <td>{{ data.mday }}</td>
-        <td>{{ data.lat }}</td>
-        <td>{{ data.lng }}</td>
-        <td>{{ data.ar }}</td>
-        <td>{{ data.sareaen }}</td>
-        <td>{{ data.snaen }}</td>
-        <td>{{ data.aren }}</td>
+        <td colspan="2">{{ data.mday }}</td>
+        <td colspan="2">{{ data.lat }}</td>
+        <td colspan="2">{{ data.lng }}</td>
+        <td colspan="3">{{ data.ar }}</td>
         <td>{{ data.bemp }}</td>
         <td>{{ data.srcUpdateTime }}</td>
         <td>{{ data.updateTime }}</td>
@@ -71,7 +66,7 @@
       <ul class="pagination">
         <li class="page-item">
           <button type="button" class="page-link" @click="page--">
-            Previous
+            <i class="bx bxs-chevron-left"></i>
           </button>
         </li>
         <li class="page-item">
@@ -87,7 +82,7 @@
         </li>
         <li class="page-item">
           <button type="button" @click="page++" class="page-link">
-            Next
+            <i class="bx bxs-chevron-right"></i>
           </button>
         </li>
       </ul>
@@ -154,12 +149,20 @@ export default {
       if (this.page >= max) {
         this.page = max;
       }
+      /* if (this.page == 0 && !!this.keyword) {
+        console.log("Hello");
+      }*/
 
       let page = this.page;
       let perPage = this.perPage;
       let from = page * perPage - perPage;
       let to = page * perPage;
       return mergeData.slice(from, to);
+    },
+    CloseMap() {
+      if (this.showMap == 1) {
+        this.showMap = !this.showMap;
+      }
     },
     ShowTheWay(data) {
       console.log(data);
@@ -197,13 +200,27 @@ export default {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 10vh;
+  height: 7vh;
 }
 
 .showmap {
+  width: 95%;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+.showmapbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 75px;
+  height: 30px;
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+}
+.bx-x {
+  font-size: 1.7rem;
 }
 table tr td {
   border: 1px solid black;
@@ -212,21 +229,18 @@ table tr td {
   width: 100%;
   height: 70vh;
   border-collapse: collapse;
+  text-align: center;
+  table-layout: fixed;
 }
-button.page-link {
-  display: inline-block;
+td:not(:hover) {
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-button.page-link {
-  font-size: 20px;
-  color: #29b3ed;
-  font-weight: 500;
-}
-.offset {
-  width: 500px !important;
-  margin: 20px auto;
-}
-.botton_icon {
-  cursor: pointer;
+td {
+  font-size: 15px;
+  word-break: break-word;
 }
 nav {
   width: 100%;
@@ -243,14 +257,22 @@ nav ul {
   align-items: center;
   justify-content: space-between;
 }
+
+button.page-link {
+  display: flex;
+  font-size: 30px;
+  font-weight: 500;
+}
+.map_icon {
+  cursor: pointer;
+  font-size: 20px;
+}
+
 .Map {
   width: 50%;
   height: 500px;
   position: absolute;
   top: 10vh;
   left: 28%;
-}
-.botton_icon {
-  font-size: 20px;
 }
 </style>
