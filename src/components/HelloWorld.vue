@@ -9,8 +9,8 @@
         @change="page = 1"
       />
     </div>
-    <div class="showmap">
-      <button class="showmapbtn" @click="CloseMap()">
+    <div class="closemap">
+      <button class="closemapbtn" @click="CloseMap()">
         <i class="bx bx-map"></i>
         <i class="bx bx-x"></i>
       </button>
@@ -26,17 +26,17 @@
           <td colspan="2">mday</td>
           <td colspan="2">lat</td>
           <td colspan="2">lng</td>
-          <td colspan="3">ar</td>
+          <td colspan="4">ar</td>
           <td>bemp</td>
-          <td>srcUpdateTime</td>
-          <td>updateTime</td>
+          <td colspan="2">srcUpdateTime</td>
+          <td colspan="2">updateTime</td>
           <td>infoTime</td>
           <td>infoDate</td>
         </tr>
       </thead>
       <tr v-for="data in mergeDatas" :key="data">
         <td>
-          <botton class="map_icon" @click="ShowTheWay(data)"
+          <botton class="map_icon" @click="ShowTheMap(data)"
             ><i class="bx bx-map"></i
           ></botton>
         </td>
@@ -47,10 +47,10 @@
         <td colspan="2">{{ data.mday }}</td>
         <td colspan="2">{{ data.lat }}</td>
         <td colspan="2">{{ data.lng }}</td>
-        <td colspan="3">{{ data.ar }}</td>
+        <td colspan="4">{{ data.ar }}</td>
         <td>{{ data.bemp }}</td>
-        <td>{{ data.srcUpdateTime }}</td>
-        <td>{{ data.updateTime }}</td>
+        <td colspan="2">{{ data.srcUpdateTime }}</td>
+        <td colspan="2">{{ data.updateTime }}</td>
         <td>{{ data.infoTime }}</td>
         <td>{{ data.infoDate }}</td>
       </tr>
@@ -164,8 +164,8 @@ export default {
         this.showMap = !this.showMap;
       }
     },
-    ShowTheWay(data) {
-      console.log(data);
+    ShowTheMap(data) {
+      // console.log(data);
       if (this.showMap == 0) {
         this.showMap = !this.showMap;
       }
@@ -180,7 +180,6 @@ export default {
         // console.log(data);
         data.mday = data.mday.replace(/[-|:]/g, "");
         data.sna = data.sna.replaceAll("YouBike2.0_", "");
-        data.snaen = data.snaen.replaceAll("YouBike2.0_", "");
       });
 
       let mergeData = Object.values(this.totaldata1).concat(this.totaldata2);
@@ -203,14 +202,14 @@ export default {
   height: 7vh;
 }
 
-.showmap {
+.closemap {
   width: 95%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
-.showmapbtn {
+.closemapbtn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -237,6 +236,7 @@ td:not(:hover) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* transition: 3s; */
 }
 td {
   font-size: 15px;
